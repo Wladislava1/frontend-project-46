@@ -3,15 +3,13 @@ import { Command } from 'commander';
 const program = new Command();
 
 program
-  .name('Reference')
+  .name('gendiff')
   .description('Compares two configuration files and shows a difference.')
   .version('1.0.0')
-  .option('-h', '-help', 'output usage information')
-  .action(() => {
-    console.log( 'Usage: gendiff [options]')
-    console.log('Compares two configuration files and shows a difference.')
-    console.log('Options:')
-    console.log('-V, --version        output the version number')
-    console.log('-h, --help           output usage information')
+  .option('-f, --format <type>', 'output format')
+  .argument('<filepath1>')
+  .argument('<filepath2>')
+  .action((filepath1, filepath2) => {
+    console.log( `Usage: gendiff [options] ${filepath1} ${filepath2}`)
   })
 program.parse();
