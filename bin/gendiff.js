@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
+import parseFile from '../src/readParse.js'
+
 const program = new Command();
 
 program
@@ -10,6 +12,8 @@ program
   .argument('<filepath1>')
   .argument('<filepath2>')
   .action((filepath1, filepath2) => {
+    console.log(parseFile(filepath1))
+    console.log(parseFile(filepath2))
     console.log( `Usage: gendiff [options] ${filepath1} ${filepath2}`)
   })
 program.parse();
