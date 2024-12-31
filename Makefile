@@ -3,3 +3,6 @@ publish:
 
 install:
 	npm ci
+
+lint:
+	npx eslint .
