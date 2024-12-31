@@ -1,0 +1,32 @@
+name: linter-tests.yml
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'  
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linter
+        run: make lint  
+
+      - name: Run tests
+        run: npm test 
+      - name: Run tests and send coverage to CodeClimate
+        env:
+          CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
+        run: npm run test:coverage && npm run coveralls
