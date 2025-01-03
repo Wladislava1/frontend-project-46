@@ -13,10 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-        - name: Set HOME directory
-        run: |
-          echo "HOME=/mnt/c/Git/Hexlet/frontend-project-46" >> $GITHUB_ENV
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
