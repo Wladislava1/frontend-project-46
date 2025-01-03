@@ -25,7 +25,8 @@ jobs:
         run: make lint  
 
       - name: Run tests
-        run: npm test 
+        run: make test 
+        
       - name: Run tests and send coverage to CodeClimate
         env:
           CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
