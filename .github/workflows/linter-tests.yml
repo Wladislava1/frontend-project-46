@@ -24,6 +24,9 @@ jobs:
       - name: Run linter
         run: make lint  
 
+      - name: List files in the repository
+        run: ls -R 
+        
       - name: Run tests
         run: make test 
         
