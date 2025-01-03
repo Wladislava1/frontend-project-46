@@ -5,6 +5,7 @@ const parseFile = (pathToFile) => {
   if (!path.isAbsolute(pathToFile)) {
     return JSON.parse(readFileSync(pathToFile));
   }
-  return JSON.parse(readFileSync(path.resolve(process.cwd(), pathToFile), 'utf-8'));
+  const relativePathNew = path.relative(process.cwd(), pathToFile).replace(/\\/g, '/');
+  return JSON.parse(readFileSync(relativePathNew));
 };
 export default parseFile;

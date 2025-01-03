@@ -1,8 +1,9 @@
 import parseFile from '../src/readParse.js';
 import {
-  relativePath, parseRelativePath,
+  resolvePath, relativePath, parseRelativePath, parseResolvePath,
 } from '../__fixtures__/tests.js';
 
 test('read and parse', () => {
+  expect(parseFile(resolvePath)).toEqual(parseResolvePath);
   expect(parseFile(relativePath)).toEqual(parseRelativePath);
 });
