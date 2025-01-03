@@ -27,7 +27,6 @@ jobs:
         run: make lint  
 
       - name: Run tests
-        working-directory: /mnt/c/Git/Hexlet/frontend-project-46
         run: make test 
         
       - name: Run tests and send coverage to CodeClimate

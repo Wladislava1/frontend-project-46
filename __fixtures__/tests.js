@@ -32,7 +32,7 @@ export const parseRelativePath = {
   verbose: true,
   host: 'hexlet.io',
 };
-export const resolvePath = '/mnt/c/Git/Hexlet/frontend-project-46/__fixtures__/file1.json';
+export const resolvePath = '/home/runner/work/Git/Hexlet/frontend-project-46/__fixtures__/file1.json';
 export const relativePath = '__fixtures__/file2.json';
 export const json1Sort = {
   follow: false,
