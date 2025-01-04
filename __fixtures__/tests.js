@@ -9,18 +9,6 @@ export const json2 = {
   verbose: true,
   host: 'hexlet.io',
 };
-export const result = `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`;
-export const result1 = `{
-
-}`;
-export const result2 = {};
 export const json1Sort = {
   follow: false,
   host: 'hexlet.io',
@@ -32,3 +20,14 @@ export const json2Sort = {
   timeout: 20,
   verbose: true,
 };
+export const result = `{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`;
+export const result1 = `{
+
+}`;
