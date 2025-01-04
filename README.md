@@ -31,8 +31,23 @@ gendiff -h
 
 ### Пример вывода справочной информации можете посмотреть, перейдя по ссылке: https://asciinema.org/a/JUSWghMADSUKPZX5V2EdKkx2D
 ### Пример сравнения двух плоских файлов json: https://asciinema.org/a/9eR1vw7YZpj7JTlR9sUwVFdwG
+### Пример сравнения двух плоских файлов yaml: https://asciinema.org/a/BoyVKJT74wQUojJsgMOpopAPl
 
+### Логика сравнения файлов .json от файлов .yaml почти ничем не отличается => резульатом парсинга .yaml явялется объект, аналогично с .json
+parseFile(yamlFile): {
+  host: 'hexlet.io',
+  timeout: 50,
+  proxy: '123.234.53.22',
+  follow: false
+}
+parseFile(jsonFile): {
+  host: 'hexlet.io',
+  timeout: 50,
+  proxy: '123.234.53.22',
+  follow: false
+}
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Wladislava1/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Wladislava1/frontend-project-46/actions)
 
+### Test Coverage Badge:
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ad63740bf79023bffc15/test_coverage)](https://codeclimate.com/github/Wladislava1/frontend-project-46/test_coverage)
