@@ -32,7 +32,10 @@ jobs:
       - name: Run tests
         run: make test 
         
-      - name: Run tests and send coverage to CodeClimate
-        env:
-          CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
-        run: npm run test:coverage && npm run coveralls
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v5.0.0
+        env: 
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
