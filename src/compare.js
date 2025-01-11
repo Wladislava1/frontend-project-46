@@ -1,28 +1,14 @@
-import sortAlphabet from './sortAlphabet.js';
+import findDifferences from './diff.js';
+import sortDiff from './sortDiff.js';
+import stylish from './stylish.js';
 
-const compare = (obj1, obj2) => {
-  const sortObj1 = sortAlphabet(obj1);
-  const sortObj2 = sortAlphabet(obj2);
-  const resultObj = [];
-  Object.keys(sortObj1).forEach((variable) => {
-    if (sortObj2[variable] !== undefined && sortObj1[variable] === sortObj2[variable]) {
-      resultObj.push(`    ${variable}: ${sortObj1[variable]}`);
-    }
-    if (sortObj2[variable] === undefined) {
-      resultObj.push(`  - ${variable}: ${sortObj1[variable]}`);
-    }
-    if (sortObj2[variable] !== undefined && sortObj1[variable] !== sortObj2[variable]) {
-      resultObj.push(`  - ${variable}: ${sortObj1[variable]}`);
-      resultObj.push(`  + ${variable}: ${sortObj2[variable]}`);
-    }
-  });
-
-  Object.keys(sortObj2).forEach((variable) => {
-    if (sortObj1[variable] === undefined) {
-      resultObj.push(`  + ${variable}: ${sortObj2[variable]}`);
-    }
-  });
-  return `{\n${resultObj.join('\n')}\n}`;
+const compare = (obj1, obj2, format = stylish) => {
+  const sortObj1 = sortDiff(obj1);
+  const sortObj2 = sortDiff(obj2);
+  if (format === undefined || format === stylish) {
+    const diffStylish = findDifferences(sortObj1, sortObj2);
+    return `{\n${format(diffStylish).join('\n')}\n}`;
+  }
+  return `Unsupported format: ${format}`;
 };
-
 export default compare;
