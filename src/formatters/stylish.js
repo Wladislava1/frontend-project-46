@@ -19,7 +19,7 @@ const stylish = (diff) => {
             break;
           case 'changed':
             current[`- ${k}`] = change.value1;
-            current[`+ ${k}`] = change.value2 === null ? 'null' : change.value2;
+            current[`+ ${k}`] = change.value2;
             break;
           default:
             break;
