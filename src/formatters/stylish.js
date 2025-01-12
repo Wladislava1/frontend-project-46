@@ -9,17 +9,17 @@ const stylish = (diff) => {
       if (i === keys.length - 1) {
         switch (change.type) {
           case 'added':
-            current[`+ ${k}`] = change.value;
+            current[`+ ${k}`] = change.value === null ? 'null' : change.value;
             break;
           case 'removed':
-            current[`- ${k}`] = change.value;
+            current[`- ${k}`] = change.value === null ? 'null' : change.value;
             break;
           case 'unchanged':
-            current[`${k}`] = change.value;
+            current[`${k}`] = change.value === null ? 'null' : change.value;
             break;
           case 'changed':
-            current[`- ${k}`] = change.value1;
-            current[`+ ${k}`] = change.value2;
+            current[`- ${k}`] = change.value1 === null ? 'null' : change.value1;
+            current[`+ ${k}`] = change.value2 === null ? 'null' : change.value2;
             break;
           default:
             break;
