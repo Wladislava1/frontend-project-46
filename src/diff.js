@@ -4,10 +4,13 @@ import sortObj from './sortDiff.js';
 const findDifferences = (obj1, obj2, path = '') => {
   const differences = {};
 
-  Object.keys(obj1).forEach((key) => {
+  const keys = _.union(Object.keys(obj1), Object.keys(obj2));
+  const sortedKeys = _.sortBy(keys);
+
+  sortedKeys.forEach((key) => {
     const currentPath = path ? `${path}.${key}` : key;
 
-    if (obj2[key] === undefined) {
+    if (!Object.hasOwn(obj2, key)) {
       differences[currentPath] = { value: obj1[key], type: 'removed' };
     } else if (obj1[key] !== obj2[key]) {
       if (Array.isArray(obj1[key]) && Array.isArray(obj2[key])) {
@@ -28,7 +31,7 @@ const findDifferences = (obj1, obj2, path = '') => {
 
   Object.keys(obj2).forEach((key) => {
     const currentPath = path ? `${path}.${key}` : key;
-    if (obj1[key] === undefined) {
+    if (!Object.hasOwn(obj1, key)) {
       differences[currentPath] = { value: obj2[key], type: 'added' };
     }
   });
