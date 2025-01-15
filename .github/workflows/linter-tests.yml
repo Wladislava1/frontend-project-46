@@ -3,7 +3,7 @@ name: linter-tests.yml
 on:
   push:
     branches:
-      - main  
+      - '**'  
 env:
   CI: true
 
