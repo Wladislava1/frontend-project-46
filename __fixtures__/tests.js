@@ -162,6 +162,9 @@ export const result = `{
 export const result1 = `{
 
 }`;
+export const result2 = `
+
+`;
 export const differentjsonsNotFlat = {
   follow: { type: 'removed', value: false },
   host: { type: 'unchanged', value: 'hexlet.io' },
@@ -182,8 +185,8 @@ export const diffrentJsons = {
   'group1.baz': { value1: 'bas', value2: 'bars', type: 'changed' },
   'group1.foo': { value: 'bar', type: 'unchanged' },
   'group1.nest': { value1: { key: 'value' }, value2: 'str', type: 'changed' },
-  group2: { value: { abc: 12345, deep: [Object] }, type: 'removed' },
-  group3: { value: { deep: [Object], fee: 100500 }, type: 'added' }
+  group2: { value: { abc: 12345, deep: { id: 45 } }, type: 'removed' },
+  group3: { value: { deep: { id: { number: 45 } }, fee: 100500 }, type: 'added' }
 };
 export const diffrentJsonsSort = {
   'common.follow': { type: 'added', value: false },
@@ -198,8 +201,8 @@ export const diffrentJsonsSort = {
   'group1.baz': { type: 'changed', value1: 'bas', value2: 'bars' },
   'group1.foo': { type: 'unchanged', value: 'bar' },
   'group1.nest': { type: 'changed', value1: { key: 'value' }, value2: 'str' },
-  group2: { type: 'removed', value: { abc: 12345, deep: { 0: Object } } },
-  group3: { type: 'added', value: { deep: { 0: Object }, fee: 100500 } }
+  group2: { type: 'removed', value: { abc: 12345, deep: { id: 45 } } },
+  group3: { type: 'added', value: { deep: { id: { number: 45 } }, fee: 100500 } }
 };
 export const plainResult = [
   "Property 'common.follow' was added with value: false",
