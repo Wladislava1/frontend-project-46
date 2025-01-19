@@ -12,7 +12,7 @@ const compare = (obj1, obj2, format = stylish) => {
   if (format === stylish) {
     return `{\n${stylish(diff)}\n}`;
   } if (format === plain) {
-    return `\n${plain(diff).join('\n')}\n`;
+    return `${plain(diff).join('\n')}`;
   } if (format === json) {
     return json(diff);
   }

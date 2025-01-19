@@ -10,12 +10,10 @@ export const json2 = {
   verbose: true,
   host: 'hexlet.io',
 };
-export const plainFormatter = `
-Property 'follow' was removed
+export const plainFormatter = `Property 'follow' was removed
 Property 'proxy' was removed
 Property 'timeout' was updated. From 50 to 20
-Property 'verbose' was added with value: true
-`;
+Property 'verbose' was added with value: true`;
 export const jsonFormatter = `{
   "follow": {
     "status": "removed",
@@ -162,9 +160,7 @@ export const result = `{
 export const result1 = `{
 
 }`;
-export const result2 = `
-
-`;
+export const result2 = '';
 export const differentjsonsNotFlat = {
   follow: { type: 'removed', value: false },
   host: { type: 'unchanged', value: 'hexlet.io' },
@@ -217,8 +213,7 @@ export const plainResult = [
   "Property 'group2' was removed",
   "Property 'group3' was added with value: [complex value]"
 ];
-export const plainResultJson = `
-Property 'common.follow' was added with value: false
+export const plainResultJson = `Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
 Property 'common.setting4' was added with value: 'blah blah'
@@ -228,8 +223,7 @@ Property 'common.setting6.ops' was added with value: 'vops'
 Property 'group1.baz' was updated. From 'bas' to 'bars'
 Property 'group1.nest' was updated. From [complex value] to 'str'
 Property 'group2' was removed
-Property 'group3' was added with value: [complex value]
-`;
+Property 'group3' was added with value: [complex value]`;
 export const jsonNotFlatFormatter = `{
   "common.follow": {
     "status": "added",
