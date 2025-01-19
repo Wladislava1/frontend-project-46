@@ -1,8 +1,5 @@
-import _ from 'lodash';
-
 const sortObj = (obj) => {
-  const cloneObj = _.cloneDeep(obj);
-  const sortedKeys = [...Object.keys(cloneObj)].sort();
+  const sortedKeys = [...Object.keys(obj)].toSorted();
   return sortedKeys.reduce((acc, key) => ({
     ...acc,
     [key]: typeof obj[key] === 'object' && obj[key] !== null

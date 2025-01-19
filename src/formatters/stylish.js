@@ -34,21 +34,21 @@ const stylish = (diff) => {
   });
 
   const cleanEmpty = (obj) => {
-    if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
-      const cleaned = Object.keys(obj).reduce((acc, key) => {
-        const cleanedValue = cleanEmpty(obj[key]);
-        if (cleanedValue !== null && (typeof cleanedValue !== 'object' || Object.keys(cleanedValue).length > 0)) {
-          acc[key] = cleanedValue;
-        }
-        return acc;
-      }, {});
-      return Object.keys(cleaned).length > 0 ? cleaned : null;
+    if (!obj || typeof obj !== 'object') {
+      return obj;
     }
-    return obj;
+    const cleaned = Object.entries(obj).reduce((acc, [key, value]) => {
+      const cleanedValue = cleanEmpty(value);
+      if (cleanedValue !== null && (typeof cleanedValue !== 'object' || Object.keys(cleanedValue).length > 0)) {
+        return { ...acc, [key]: cleanedValue };
+      }
+      return acc;
+    }, {});
+
+    return Object.keys(cleaned).length > 0 ? cleaned : null;
   };
 
   const cleanedResult = cleanEmpty(result);
-  const finalResult = cleanedResult || {};
 
   const formatResult = (obj, depth = 1) => Object.entries(obj).map(([key, value]) => {
     const indent = key.startsWith('+') || key.startsWith('-')
@@ -60,7 +60,7 @@ const stylish = (diff) => {
     return `${indent}${key}: ${value}`;
   }).join('\n');
 
-  return formatResult(finalResult);
+  return formatResult(cleanedResult || {});
 };
 
 export default stylish;
