@@ -1,28 +1,32 @@
 const json = (diff) => {
-  const result = {};
-  Object.entries(diff).forEach(([key, change]) => {
+  const result = Object.entries(diff).reduce((acc, [key, change]) => {
+    const newEntry = {};
+
     switch (change.type) {
       case 'added':
-        result[key] = { status: 'added', value: change.value };
+        newEntry[key] = { status: 'added', value: change.value };
         break;
       case 'removed':
-        result[key] = { status: 'removed', value: change.value };
+        newEntry[key] = { status: 'removed', value: change.value };
         break;
       case 'changed':
-        result[key] = {
+        newEntry[key] = {
           status: 'changed',
           oldValue: change.value1,
           newValue: change.value2,
         };
         break;
       case 'unchanged':
-        result[key] = { status: 'unchanged', value: change.value };
+        newEntry[key] = { status: 'unchanged', value: change.value };
         break;
       default:
         break;
     }
-  });
+
+    return { ...acc, ...newEntry };
+  }, {});
 
   return JSON.stringify(result, null, 2);
 };
+
 export default json;

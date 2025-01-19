@@ -1,13 +1,11 @@
 const sortObj = (obj) => {
-  const resSortedObj = {};
-  Object.keys(obj).sort().forEach((key) => {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      resSortedObj[key] = sortObj(obj[key]);
-    } else {
-      resSortedObj[key] = obj[key];
-    }
-  });
-
-  return resSortedObj;
+  const sortedKeys = Object.keys(obj).slice().sort();
+  return sortedKeys.reduce((acc, key) => {
+    acc[key] = typeof obj[key] === 'object' && obj[key] !== null
+      ? sortObj(obj[key])
+      : obj[key];
+    return acc;
+  }, {});
 };
+
 export default sortObj;
