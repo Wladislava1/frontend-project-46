@@ -33,16 +33,22 @@ const stylish = (diff) => {
     }, result);
   });
 
-  (function cleanEmpty(obj) {
-    if (obj && typeof obj === 'object') {
-      Object.keys(obj).forEach((key) => {
-        cleanEmpty(obj[key]);
-        if (typeof obj[key] === 'object' && obj[key] === null) {
-          delete obj[key];
+  const cleanEmpty = (obj) => {
+    if (obj && typeof obj === 'object' && !Array.isArray(obj)) {
+      const cleaned = Object.keys(obj).reduce((acc, key) => {
+        const cleanedValue = cleanEmpty(obj[key]);
+        if (cleanedValue !== null && (typeof cleanedValue !== 'object' || Object.keys(cleanedValue).length > 0)) {
+          acc[key] = cleanedValue;
         }
-      });
+        return acc;
+      }, {});
+      return Object.keys(cleaned).length > 0 ? cleaned : null;
     }
-  }(result));
+    return obj;
+  };
+
+  const cleanedResult = cleanEmpty(result);
+  const finalResult = cleanedResult || {};
 
   const formatResult = (obj, depth = 1) => Object.entries(obj).map(([key, value]) => {
     const indent = key.startsWith('+') || key.startsWith('-')
@@ -54,7 +60,7 @@ const stylish = (diff) => {
     return `${indent}${key}: ${value}`;
   }).join('\n');
 
-  return formatResult(result);
+  return formatResult(finalResult);
 };
 
 export default stylish;
