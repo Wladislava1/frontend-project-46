@@ -1,5 +1,7 @@
+import _ from 'lodash';
+
 const sortObj = (obj) => {
-  const sortedKeys = Object.keys(obj).map((key) => key).sort();
+  const sortedKeys = _.sortBy(Object.keys(obj));
 
   return sortedKeys.reduce((acc, key) => ({
     ...acc,
