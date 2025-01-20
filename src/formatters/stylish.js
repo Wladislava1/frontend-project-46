@@ -1,9 +1,11 @@
 const stylish = (diff) => {
   const buildResult = (acc, keys, change) => {
-    const [firstKey, ...restKeys] = keys;
-
+    if (keys.length === 0) {
+      return acc;
+    }
+    const firstKey = keys[0];
+    const restKeys = keys.slice(1);
     if (restKeys.length === 0) {
-      // Base case: apply the change at the final key
       const newEntry = (() => {
         switch (change.type) {
           case 'added':
@@ -24,8 +26,6 @@ const stylish = (diff) => {
 
       return { ...acc, ...newEntry };
     }
-
-    // Recursive case: build nested structure
     return {
       ...acc,
       [firstKey]: buildResult(acc[firstKey] || {}, restKeys, change),
