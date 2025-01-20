@@ -1,66 +1,57 @@
-/* eslint-disable no-lonely-if */
-/* eslint-disable no-param-reassign */
 const stylish = (diff) => {
-  const result = {};
+  const buildResult = (acc, keys, change) => {
+    const [firstKey, ...restKeys] = keys;
 
-  Object.entries(diff).forEach(([key, change]) => {
-    const keys = key.split('.');
-    keys.reduce((current, k, i) => {
-      if (i === keys.length - 1) {
+    if (restKeys.length === 0) {
+      // Base case: apply the change at the final key
+      const newEntry = (() => {
         switch (change.type) {
           case 'added':
-            current[`+ ${k}`] = change.value === null ? 'null' : change.value;
-            break;
+            return { [`+ ${firstKey}`]: change.value === null ? 'null' : change.value };
           case 'removed':
-            current[`- ${k}`] = change.value === null ? 'null' : change.value;
-            break;
+            return { [`- ${firstKey}`]: change.value === null ? 'null' : change.value };
           case 'unchanged':
-            current[`${k}`] = change.value === null ? 'null' : change.value;
-            break;
+            return { [firstKey]: change.value === null ? 'null' : change.value };
           case 'changed':
-            current[`- ${k}`] = change.value1 === null ? 'null' : change.value1;
-            current[`+ ${k}`] = change.value2 === null ? 'null' : change.value2;
-            break;
+            return {
+              [`- ${firstKey}`]: change.value1 === null ? 'null' : change.value1,
+              [`+ ${firstKey}`]: change.value2 === null ? 'null' : change.value2,
+            };
           default:
-            break;
+            return {};
         }
-      } else {
-        if (!current[k]) {
-          current[k] = {};
-        }
-      }
-      return current[k];
-    }, result);
-  });
+      })();
 
-  const cleanEmpty = (obj) => {
-    if (!obj || typeof obj !== 'object') {
-      return obj;
+      return { ...acc, ...newEntry };
     }
-    const cleaned = Object.entries(obj).reduce((acc, [key, value]) => {
-      const cleanedValue = cleanEmpty(value);
-      if (cleanedValue !== null && (typeof cleanedValue !== 'object' || Object.keys(cleanedValue).length > 0)) {
-        return { ...acc, [key]: cleanedValue };
-      }
-      return acc;
-    }, {});
 
-    return Object.keys(cleaned).length > 0 ? cleaned : null;
+    // Recursive case: build nested structure
+    return {
+      ...acc,
+      [firstKey]: buildResult(acc[firstKey] || {}, restKeys, change),
+    };
   };
 
-  const cleanedResult = cleanEmpty(result);
+  const result = Object.entries(diff).reduce((acc, [key, change]) => {
+    const keys = key.split('.');
+    return buildResult(acc, keys, change);
+  }, {});
 
-  const formatResult = (obj, depth = 1) => Object.entries(obj).map(([key, value]) => {
-    const indent = key.startsWith('+') || key.startsWith('-')
-      ? ' '.repeat(depth * 4 - 2)
-      : ' '.repeat(depth * 4);
-    if (typeof value === 'object' && !Array.isArray(value)) {
-      return `${indent}${key}: {\n${formatResult(value, depth + 1)}\n${' '.repeat(depth * 4)}}`;
-    }
-    return `${indent}${key}: ${value}`;
-  }).join('\n');
+  const formatResult = (obj, depth = 1) => Object.entries(obj)
+    .map(([key, value]) => {
+      const indent = key.startsWith('+') || key.startsWith('-')
+        ? ' '.repeat(depth * 4 - 2)
+        : ' '.repeat(depth * 4);
 
-  return formatResult(cleanedResult || {});
+      if (typeof value === 'object' && value !== null) {
+        return `${indent}${key}: {\n${formatResult(value, depth + 1)}\n${' '.repeat(depth * 4)}}`;
+      }
+
+      return `${indent}${key}: ${value}`;
+    })
+    .join('\n');
+
+  return formatResult(result);
 };
 
 export default stylish;
