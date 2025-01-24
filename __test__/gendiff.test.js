@@ -9,11 +9,10 @@ import plain from '../src/formatters/plain.js';
 import compare from '../src/formatters/index.js';
 import {
   jsonNotFlatFormatter, jsonFormatter, json1, json2, jsonNotFlat1,
-  jsonNotFlat2, diffrentJsonsSort, plainResult, result, result1,
-  resultNotFlat, plainResultJson, plainFormatter, diffrentJsons,
+  jsonNotFlat2, diffrentNotFlat, plainResult, stylishFlat, result1,
+  stylishNotFlat, plainFormatter, differentFlat,
   result2,
 } from '../__fixtures__/tests.js';
-import sortObj from '../src/sortDiff.js';
 import stylish from '../src/formatters/stylish.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,7 +31,9 @@ describe('read and parse files', () => {
     ['file1notFlat.yaml', yaml.load(readFixture('file1notFlat.yaml'))],
     ['file2notFlat.yaml', yaml.load(readFixture('file2notFlat.yaml'))],
   ])('parse %s correctly', (filename, expected) => {
-    expect(parseFile(`__fixtures__/${filename}`)).toEqual(expected);
+    const fileContent = readFixture(filename);
+    const fileType = path.extname(filename).slice(1);
+    expect(parseFile(fileContent, fileType)).toEqual(expected);
   });
 });
 
@@ -48,42 +49,44 @@ describe('formatter json', () => {
 
 describe('formatter plain', () => {
   test.each([
-    [diffrentJsonsSort, plainResult],
-    [[], []],
+    [diffrentNotFlat, plainResult],
+    [differentFlat, plainFormatter],
+    [{}, ''],
   ])('correctly formats %o', (input, expected) => {
     expect(plain(input)).toEqual(expected);
+  });
+});
+
+describe('formatter stylish', () => {
+  test.each([
+    [diffrentNotFlat, stylishNotFlat],
+    [differentFlat, stylishFlat],
+    [{}, result1],
+  ])('correctly formats %o', (input, expected) => {
+    expect(stylish(input)).toEqual(expected);
   });
 });
 
 describe('compare two files json and yaml with plain', () => {
   test.each([
     [json1, json2, plainFormatter],
-    [jsonNotFlat1, jsonNotFlat2, plainResultJson],
+    [jsonNotFlat1, jsonNotFlat2, plainResult],
     [{}, {}, result2],
   ])('correctly compares %o and %o with format %s', (file1, file2, expected) => {
-    expect(compare(file1, file2, plain)).toEqual(expected);
+    expect(compare(file1, file2, 'plain')).toEqual(expected);
   });
 });
 
 describe('compare two files json and yaml with stylish', () => {
   test.each([
-    [json1, json2, result],
-    [jsonNotFlat1, jsonNotFlat2, resultNotFlat],
+    [json1, json2, stylishFlat],
+    [jsonNotFlat1, jsonNotFlat2, stylishNotFlat],
     [{}, {}, result1],
   ])('correctly compares %o and %o with format %s', (file1, file2, expected) => {
-    expect(compare(file1, file2, stylish)).toEqual(expected);
+    expect(compare(file1, file2, 'stylish')).toEqual(expected);
   });
 });
 
 test('correctly finds differences between nested objects', () => {
-  expect(findDifferences(jsonNotFlat1, jsonNotFlat2)).toEqual(diffrentJsonsSort);
-});
-
-describe('alphabetically sorted diff', () => {
-  test.each([
-    [diffrentJsons, diffrentJsonsSort],
-    [{}, {}],
-  ])('correctly sorts %o', (input, expected) => {
-    expect(sortObj(input)).toEqual(expected);
-  });
+  expect(findDifferences(jsonNotFlat1, jsonNotFlat2)).toEqual(diffrentNotFlat);
 });
