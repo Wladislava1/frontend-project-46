@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import yaml from 'js-yaml';
 import * as path from 'path';
-import parseFile from '../src/readParse.js';
+import parseFile from '../src/parser.js';
 import json from '../src/formatters/json.js';
 import findDifferences from '../src/diff.js';
 import plain from '../src/formatters/plain.js';

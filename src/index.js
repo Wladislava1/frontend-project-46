@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import * as path from 'path';
 import compare from './formatters/index.js';
-import parseFile from './readParse.js';
+import parseFile from './parser.js';
 
 const choice = (filepath1, filepath2, format) => {
   if (!filepath1 || !filepath2) {
