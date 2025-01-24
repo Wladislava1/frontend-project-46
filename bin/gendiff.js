@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import choise from '../src/choise.js';
+import choise from '../src/index.js';
 
 const program = new Command();
 
