@@ -6,14 +6,15 @@ import json from './json.js';
 const compare = (obj1, obj2, format = 'stylish') => {
   const diff = findDifferences(obj1, obj2);
 
-  if (format === 'stylish') {
-    return stylish(diff);
-  } if (format === 'plain') {
-    return plain(diff);
-  } if (format === 'json') {
-    return json(diff);
+  switch (format) {
+    case 'stylish':
+      return stylish(diff);
+    case 'plain':
+      return plain(diff);
+    case 'json':
+      return json(diff);
+    default:
+      return `Unknow format ${format}`;
   }
-  return `Unknown format: ${format}`;
 };
-
 export default compare;
