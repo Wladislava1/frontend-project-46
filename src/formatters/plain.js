@@ -21,22 +21,24 @@ const handleChanged = (key, value1, value2) => {
   return `Property '${key}' was updated. From ${formatValue(value1)} to ${formatValue(value2)}`;
 };
 
-const plain = (objDiff) => Object.keys(objDiff).reduce((acc, key) => {
+const processDiff = (objDiff, parentKey = '') => Object.keys(objDiff).flatMap((key) => {
+  const fullKey = parentKey ? `${parentKey}.${key}` : key;
   const value = objDiff[key];
 
-  if (value.type === 'removed') {
-    return acc.concat(handleRemoved(key));
+  switch (value.type) {
+    case 'removed':
+      return handleRemoved(fullKey);
+    case 'added':
+      return handleAdded(fullKey, value.value);
+    case 'changed':
+      return handleChanged(fullKey, value.value1, value.value2);
+    case 'nested':
+      return processDiff(value.children, fullKey);
+    default:
+      return [];
   }
+});
 
-  if (value.type === 'added') {
-    return acc.concat(handleAdded(key, value.value));
-  }
-
-  if (value.type === 'changed') {
-    return acc.concat(handleChanged(key, value.value1, value.value2));
-  }
-
-  return acc;
-}, []);
+const plain = (objDiff) => processDiff(objDiff).join('\n');
 
 export default plain;
