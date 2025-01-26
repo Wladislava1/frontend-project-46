@@ -4,7 +4,7 @@
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
-  "main": "src/choise.js",
+  "main": "src/index.js",
   "engines": {
     "node": ">=14"
   },
