@@ -30,6 +30,7 @@ export default [
     },
     plugins: { import: importPlugin },
     rules: {
+      'prettier/prettier': 'error',
       ...importPlugin.configs.recommended.rules,
     },
   },
