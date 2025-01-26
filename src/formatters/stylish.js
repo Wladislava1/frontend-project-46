@@ -6,33 +6,29 @@ const stylish = (diff) => {
 
     switch (type) {
       case 'added':
-        acc[`+ ${key}`] = value === null ? 'null' : value;
-        break;
+        return { ...acc, [`+ ${key}`]: value === null ? 'null' : value };
       case 'removed':
-        acc[`- ${key}`] = value === null ? 'null' : value;
-        break;
+        return { ...acc, [`- ${key}`]: value === null ? 'null' : value };
       case 'unchanged':
-        acc[key] = value === null ? 'null' : value;
-        break;
+        return { ...acc, [key]: value === null ? 'null' : value };
       case 'changed':
-        acc[`- ${key}`] = value1 === null ? 'null' : value1;
-        acc[`+ ${key}`] = value2 === null ? 'null' : value2;
-        break;
-      case 'nested':
-        acc[key] = { type: 'nested', children: {} };
-        Object.entries(children).forEach(([childKey, childChange]) => {
-          buildResult(acc[key].children, childKey, childChange);
-        });
-        break;
+        return {
+          ...acc,
+          [`- ${key}`]: value1 === null ? 'null' : value1,
+          [`+ ${key}`]: value2 === null ? 'null' : value2,
+        };
+      case 'nested': {
+        const nestedChildren = Object.entries(children)
+          .reduce((nestedAcc, [childKey, childChange]) => buildResult(nestedAcc, childKey, childChange), {});
+        return { ...acc, [key]: { type: 'nested', children: nestedChildren } };
+      }
       default:
-        break;
+        return acc;
     }
   };
 
-  const result = {};
-  Object.entries(diff).forEach(([key, change]) => {
-    buildResult(result, key, change);
-  });
+  const result = Object.entries(diff)
+    .reduce((acc, [key, change]) => buildResult(acc, key, change), {});
 
   const formatResult = (obj, depth = 1) => Object.entries(obj)
     .map(([key, value]) => {

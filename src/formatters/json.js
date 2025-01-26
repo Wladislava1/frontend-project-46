@@ -14,20 +14,19 @@ const json = (diff) => {
       case 'unchanged':
         return { status: 'unchanged', value: change.value };
       case 'nested': {
-        const children = Object.entries(change.children).reduce((acc, [key, childChange]) => {
-          acc[key] = buildJson(childChange);
-          return acc;
-        }, {});
+        const children = Object.entries(change.children)
+          .reduce((acc, [key, childChange]) => {
+            acc[key] = buildJson(childChange);
+            return acc;
+          }, {});
         return { children };
       }
       default:
         return {};
     }
   };
-  const result = Object.entries(diff).reduce((acc, [key, change]) => {
-    acc[key] = buildJson(change);
-    return acc;
-  }, {});
+  const result = Object.entries(diff)
+    .reduce((acc, [key, change]) => ({ ...acc, [key]: buildJson(change) }), {});
 
   return JSON.stringify(result, null, 2);
 };
