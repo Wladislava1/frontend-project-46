@@ -73,7 +73,7 @@ describe('compare two files json and yaml with plain', () => {
     [jsonNotFlat1, jsonNotFlat2, plainResult],
     [{}, {}, result2],
   ])('correctly compares %o and %o with format %s', (file1, file2, expected) => {
-    expect(compare(file1, file2, plain)).toEqual(expected);
+    expect(compare(file1, file2, 'plain')).toEqual(expected);
   });
 });
 
@@ -83,7 +83,7 @@ describe('compare two files json and yaml with stylish', () => {
     [jsonNotFlat1, jsonNotFlat2, stylishNotFlat],
     [{}, {}, result1],
   ])('correctly compares %o and %o with format %s', (file1, file2, expected) => {
-    expect(compare(file1, file2, stylish)).toEqual(expected);
+    expect(compare(file1, file2, 'stylish')).toEqual(expected);
   });
 });
 
