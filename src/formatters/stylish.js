@@ -18,8 +18,10 @@ const stylish = (diff) => {
           [`+ ${key}`]: value2 === null ? 'null' : value2,
         };
       case 'nested': {
-        const nestedChildren = Object.entries(children)
-          .reduce((nestedAcc, [childKey, childChange]) => buildResult(nestedAcc, childKey, childChange), {});
+        const nestedChildren = Object.entries(children).reduce(
+          (nestedAcc, [childKey, childChange]) => buildResult(nestedAcc, childKey, childChange),
+          {},
+        );
         return { ...acc, [key]: { type: 'nested', children: nestedChildren } };
       }
       default:

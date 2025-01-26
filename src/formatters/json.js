@@ -15,11 +15,8 @@ const json = (diff) => {
         return { status: 'unchanged', value: change.value };
       case 'nested': {
         const children = Object.entries(change.children)
-          .reduce((acc, [key, childChange]) => {
-            acc[key] = buildJson(childChange);
-            return acc;
-          }, {});
-        return { children };
+          .reduce((acc, [key, childChange]) => ({ ...acc, [key]: buildJson(childChange) }), {});
+        return { status: 'nested', children };
       }
       default:
         return {};
