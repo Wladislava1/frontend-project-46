@@ -16,24 +16,24 @@ Property 'timeout' was updated. From 50 to 20
 Property 'verbose' was added with value: true`;
 export const jsonFormatter = `{
   "follow": {
-    "status": "removed",
+    "type": "removed",
     "value": false
   },
   "host": {
-    "status": "unchanged",
+    "type": "unchanged",
     "value": "hexlet.io"
   },
   "proxy": {
-    "status": "removed",
+    "type": "removed",
     "value": "123.234.53.22"
   },
   "timeout": {
-    "status": "changed",
-    "oldValue": 50,
-    "newValue": 20
+    "type": "changed",
+    "value1": 50,
+    "value2": 20
   },
   "verbose": {
-    "status": "added",
+    "type": "added",
     "value": true
   }
 }`;
@@ -206,51 +206,54 @@ Property 'group2' was removed
 Property 'group3' was added with value: [complex value]`;
 export const jsonNotFlatFormatter = `{
   "common": {
+    "type": "nested",
     "children": {
       "follow": {
-        "status": "added",
+        "type": "added",
         "value": false
       },
       "setting1": {
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "Value 1"
       },
       "setting2": {
-        "status": "removed",
+        "type": "removed",
         "value": 200
       },
       "setting3": {
-        "status": "changed",
-        "oldValue": true,
-        "newValue": null
+        "type": "changed",
+        "value1": true,
+        "value2": null
       },
       "setting4": {
-        "status": "added",
+        "type": "added",
         "value": "blah blah"
       },
       "setting5": {
-        "status": "added",
+        "type": "added",
         "value": {
           "key5": "value5"
         }
       },
       "setting6": {
+        "type": "nested",
         "children": {
           "doge": {
+            "type": "nested",
             "children": {
               "wow": {
-                "status": "changed",
-                "oldValue": "",
-                "newValue": "so much"
+                "type": "changed",
+                "value1": "",
+                "value2": "so much"
               }
             }
           },
           "key": {
-            "status": "unchanged",
+            "type": "unchanged",
             "value": "value"
           },
           "ops": {
-            "status": "added",
+            "type": "added",
             "value": "vops"
           }
         }
@@ -258,27 +261,28 @@ export const jsonNotFlatFormatter = `{
     }
   },
   "group1": {
+    "type": "nested",
     "children": {
       "baz": {
-        "status": "changed",
-        "oldValue": "bas",
-        "newValue": "bars"
+        "type": "changed",
+        "value1": "bas",
+        "value2": "bars"
       },
       "foo": {
-        "status": "unchanged",
+        "type": "unchanged",
         "value": "bar"
       },
       "nest": {
-        "status": "changed",
-        "oldValue": {
+        "type": "changed",
+        "value1": {
           "key": "value"
         },
-        "newValue": "str"
+        "value2": "str"
       }
     }
   },
   "group2": {
-    "status": "removed",
+    "type": "removed",
     "value": {
       "abc": 12345,
       "deep": {
@@ -287,7 +291,7 @@ export const jsonNotFlatFormatter = `{
     }
   },
   "group3": {
-    "status": "added",
+    "type": "added",
     "value": {
       "deep": {
         "id": {
