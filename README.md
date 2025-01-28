@@ -103,24 +103,24 @@ Property 'verbose' was added with value: true
 ```
 {
   "follow": {
-    "status": "removed",    
+    "type": "removed",
     "value": false
   },
   "host": {
-    "status": "unchanged",  
-    "value": "hexlet.io"    
+    "type": "unchanged",
+    "value": "hexlet.io"
   },
   "proxy": {
-    "status": "removed",    
+    "type": "removed",
     "value": "123.234.53.22"
   },
   "timeout": {
-    "status": "changed",
-    "oldValue": 50,
-    "newValue": 20
+    "type": "changed",
+    "value1": 50,
+    "value2": 20
   },
   "verbose": {
-    "status": "added",
+    "type": "added",
     "value": true
   }
 }
