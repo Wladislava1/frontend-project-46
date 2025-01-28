@@ -2,23 +2,24 @@ import _ from 'lodash';
 
 const formatValue = (value) => (typeof value === 'string' ? `'${value}'` : value);
 
+const stringify = (value) => {
+  if (_.isPlainObject(value) || Array.isArray(value)) {
+    return '[complex value]';
+  }
+  return formatValue(value);
+};
+
 const handleRemoved = (key) => `Property '${key}' was removed`;
 
-const handleAdded = (key, value) => (_.isPlainObject(value)
-  ? `Property '${key}' was added with value: [complex value]`
-  : `Property '${key}' was added with value: ${formatValue(value)}`);
+const handleAdded = (key, value) => {
+  const formattedValue = stringify(value);
+  return `Property '${key}' was added with value: ${formattedValue}`;
+};
 
 const handleChanged = (key, value1, value2) => {
-  if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-    return `Property '${key}' was updated. From [complex value] to [complex value]`;
-  }
-  if (!_.isPlainObject(value1) && _.isPlainObject(value2)) {
-    return `Property '${key}' was updated. From ${formatValue(value1)} to [complex value]`;
-  }
-  if (_.isPlainObject(value1) && !_.isPlainObject(value2)) {
-    return `Property '${key}' was updated. From [complex value] to ${formatValue(value2)}`;
-  }
-  return `Property '${key}' was updated. From ${formatValue(value1)} to ${formatValue(value2)}`;
+  const formattedValue1 = stringify(value1);
+  const formattedValue2 = stringify(value2);
+  return `Property '${key}' was updated. From ${formattedValue1} to ${formattedValue2}`;
 };
 
 const processDiff = (objDiff, parentKey = '') => Object.keys(objDiff).flatMap((key) => {
