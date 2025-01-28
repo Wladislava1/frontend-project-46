@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import * as path from 'path';
+import findDifferences from './diff.js';
 import compare from './formatters/index.js';
 import parseFile from './parser.js';
 
@@ -13,7 +14,8 @@ const choice = (filepath1, filepath2, format) => {
   const fileType2 = path.extname(filepath2).slice(1);
   const parsedFile1 = parseFile(fileContent1, fileType1);
   const parsedFile2 = parseFile(fileContent2, fileType2);
-  return compare(parsedFile1, parsedFile2, format);
+  const diff = findDifferences(parsedFile1, parsedFile2);
+  return compare(diff, format);
 };
 
 export default choice;
